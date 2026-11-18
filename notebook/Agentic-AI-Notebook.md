@@ -608,13 +608,19 @@ Viết eval (task + criteria) → Chạy baseline, ghi số
 - **Tuần 3 — Vận hành (D5 + tổng ôn):** đọc *Building with the Claude API*. Làm câu hỏi mẫu trong exam guide, tự chấm theo domain. Ôn lại các anti-pattern (Ch. 9.4, Ch. 11.3) — đề thi thích hỏi "đâu là lựa chọn sai".
 - **Trước thi:** đọc lại exam guide một lần nữa (domain weights có thể đổi), kiểm tra Pearson VUE setup, ngủ đủ.
 
-### 13.3 Các chứng chỉ liên quan (để biết, không cần thi hết)
+### 13.3 Các chứng chỉ liên quan — xem chi tiết trong repo
+
+Repo [agentic-ai-notebook](https://github.com/thanquannguyen/agentic-ai-notebook)
+có file riêng cho từng chứng chỉ trong thư mục `exams/` (domain weights đầy đủ,
+tài liệu riêng, kế hoạch học): `CCAO-F.md`, `CCDV-F.md`, `CCAR-F.md`, `CCAR-P.md`.
 
 | Chứng chỉ | Ai nên thi | Khác CCAR-F ở đâu |
 |---|---|---|
-| CCAO-F Associate: Foundations ($99, 60 câu) | Người dùng Claude trong công việc (ops, PM, marketing) | Nhẹ về kỹ thuật, nặng về prompting và đánh giá output |
-| CCDV-F Developer: Foundations ($125, 53 câu) | Engineer build app trên API/SDK | Nặng về Applications & Integration (33.1%), Agents & Workflows (14.7%) |
-| CCAR-P Architect: Professional ($175, 63 câu) | Architect senior, làm end-to-end | Sâu hơn CCAR-F về solution design và delivery |
+| CCAO-F Associate: Foundations ($99, 60 câu) | Người dùng Claude trong công việc (ops, PM, marketing) | Nhẹ về kỹ thuật, nặng về prompting và đánh giá output (Output Evaluation 21%) |
+| CCDV-F Developer: Foundations ($125, 53 câu) | Engineer build app trên API/SDK | Nặng về Applications & Integration (33.1%), Agents & Workflows (14.7%). ⚠️ Nội dung thi cập nhật từ 07/12/2026, weights có thể đổi |
+| CCAR-P Architect: Professional ($175, 63 câu) | Architect senior, làm end-to-end | Sâu hơn CCAR-F về solution design, integration (19%), evals, governance và stakeholder (28% phi kỹ thuật) |
+
+Lộ trình khuyên dùng: CCAR-F → CCDV-F → CCAR-P → CCAO-F (xem README của repo).
 
 ---
 
