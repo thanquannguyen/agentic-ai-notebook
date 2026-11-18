@@ -580,6 +580,164 @@ Viết eval (task + criteria) → Chạy baseline, ghi số
 
 ---
 
+## 12B. Hỏi sâu — chẩn đoán tư duy thiết kế
+
+**Vấn đề của chương 12:** câu hỏi checklist chỉ kiểm tra "có biết không".
+Một intern có thể thuộc lòng định nghĩa mà vẫn không thiết kế được hệ thống.
+Chương này dành cho Nguyên — người biết rõ hơn intern nhiều — để **hỏi sâu
+bằng chuỗi follow-up, scenario hỏng thật, và câu hỏi trade-off**. Nguyên tắc:
+đừng hỏi một câu rồi chấm; hỏi câu đầu, nghe câu trả lời, rồi hỏi "vì sao"
+thêm 2–3 lần nữa. Độ sâu của tư duy lộ ra ở lần hỏi thứ hai và thứ ba, không
+phải lần đầu.
+
+### 12B.1 Kỹ thuật hỏi
+
+| Kỹ thuật | Cách làm | Ví dụ |
+|---|---|---|
+| **Why-ladder** | Hỏi "vì sao" 3 lần liên tiếp trên cùng một quyết định | "Sao em dùng subagent?" → "Sao không làm trong main loop?" → "Cái gì trong task đó bắt buộc phải tách context?" |
+| **Scenario hỏng** | Đưa một trace/log bị lỗi, bắt chẩn đoán nguyên nhân gốc | Xem 12B.3 và `practice/05-debug-a-broken-agent.md` |
+| **Trade-off ép chọn** | Đưa hai mục tiêu mâu thuẫn, bắt chọn và biện hộ | "Giảm 50% cost nhưng tăng 20% lỗi — có đổi không? Đổi ở task nào, không đổi ở task nào?" |
+| **Câu hỏi bẫy** | Đáp án ngây thơ nghe có vẻ đúng nhưng sai | Xem 12B.4 |
+| **Đòi số liệu** | Bắt định lượng thay vì nói chung chung | "Em nói agent 'nhanh hơn' — nhanh hơn bao nhiêu, đo bằng gì, trên bao nhiêu task?" |
+
+**Tín hiệu của câu trả lời sâu:** nhắc tới trade-off mà không ai hỏi; nêu
+được failure mode cụ thể; định lượng được (số bước, token, % lỗi); phân biệt
+được "đúng trong trường hợp này" với "đúng nói chung". **Tín hiệu của câu trả
+lời nông:** chỉ lặp lại định nghĩa; mọi câu trả lời đều là "thêm prompt" hoặc
+"đổi model mạnh hơn"; không nêu được trường hợp nào giải pháp của mình thất bại.
+
+### 12B.2 Bộ câu hỏi sâu theo chủ đề
+
+#### (a) Loop & stopping — agent dừng khi nào, và dừng sai thì sao
+
+1. Agent của em chạy 40 bước vẫn chưa xong. Làm sao em biết nó đang **tiến
+   triển** hay đang **lạc**? Dấu hiệu nào trong trace phân biệt hai trường hợp đó?
+   → Follow-up: nếu em đặt giới hạn 20 bước, task nào sẽ bị cắt oan? Làm sao
+   em biết giới hạn đó là đúng?
+2. "Done" của em là model tự nói xong, hay là một check bằng code? Nếu model
+   nói xong nhưng output sai format thì sao? Ai là người cuối cùng quyết định
+   task xong — model hay code?
+3. Agent lặp đi lặp lại cùng một tool call với cùng argument. Nguyên nhân có
+   thể là gì — và mỗi nguyên nhân thì sửa ở đâu (prompt? tool result? loop?)?
+
+#### (b) Context — cái gì vào context, cái gì không
+
+1. Tool trả về 50.000 token log. Em đưa hết vào context hay tóm tắt? Nếu tóm
+   tắt thì **mất thông tin gì**, và làm sao em biết phần mất đó không quan trọng?
+2. Compaction xong agent quên mất quyết định quan trọng ở đầu session. Em
+   thiết kế compaction thế nào để chuyện đó không xảy ra — và em kiểm tra bằng
+   cách nào?
+3. Hai subagent cùng làm việc trên một codebase, mỗi đứa có context riêng.
+   Khi nào việc tách context giúp, khi nào nó làm agent **mất đồng bộ** với nhau?
+   Em phát hiện mất đồng bộ bằng cách nào?
+
+#### (c) Tool design — tool tốt khác tool tệ ở đâu
+
+1. Em có 15 tool. Model hay gọi sai tool. Em giảm số tool, gộp tool, hay viết
+   lại mô tả? **Bằng chứng nào** giúp em chọn một trong ba cách đó?
+2. Tool của em trả về lỗi "something went wrong". Model sẽ làm gì tiếp theo —
+   và em thiết kế error message thế nào để model **tự sửa được** thay vì thử
+   lại mù quáng?
+3. Khi nào một việc nên là tool, khi nào nên là **code trong harness** (không
+   cho model quyết)? Cho ví dụ một việc em đã để model quyết nhưng lẽ ra phải
+   hard-code.
+
+#### (d) Orchestration — chia việc cho nhiều agent
+
+1. Orchestrator chia task thành 5 subtask, một worker fail. Orchestrator làm
+   gì: retry worker đó, chia lại, hay bỏ qua và tiếp tục? **Quyết định đó phụ
+   thuộc vào cái gì** (task độc lập hay phụ thuộc? lỗi tạm thời hay lỗi logic?)?
+2. Em nói "multi-agent nhanh hơn" — nhanh hơn ở điều nào: wall-clock, token,
+   hay độ chính xác? Có trường hợp nào multi-agent **chậm hơn và tệ hơn** single
+   agent không?
+3. Worker A và worker B cùng sửa một file, kết quả xung đột. Ai chịu trách
+   nhiệm merge — orchestrator, worker, hay người? Em thiết kế thế nào để xung
+   đột này không xảy ra ngay từ đầu?
+
+#### (e) Memory — agent "nhớ" cái gì, và nhớ sai thì sao
+
+1. Memory file của em chứa một quy ước đã lỗi thời. Agent cứ làm theo quy ước
+   cũ. Làm sao em phát hiện memory đã stale — và ai có quyền sửa memory, agent
+   hay người?
+2. Agent tự ghi vào memory một "bài học" sai từ một task fail. Lỗi đó sẽ lan
+   sang các task sau thế nào? Em ngăn chuyện đó bằng cách nào?
+3. Phân biệt giúp anh: cái gì nên để trong CLAUDE.md, cái gì nên để trong
+   skill, cái gì nên để trong memory file — và **cái gì không nên ghi vào đâu
+   cả**?
+
+#### (f) Evals & debugging — làm sao biết agent tốt lên
+
+1. Em sửa prompt, eval tăng từ 70% lên 85%. Làm sao em biết đó là cải thiện
+   thật, không phải **eval bị rò rỉ** (task trong eval giống hệt ví dụ trong
+   prompt)?
+2. Eval pass nhưng người dùng vẫn chê. Có thể eval đang đo sai thứ gì? Em sẽ
+   kiểm tra bằng cách nào — thêm task mới, đổi judge, hay hỏi người dùng?
+3. Agent fail một task, em xem trace. Em phân loại lỗi thế nào: lỗi chọn tool,
+   lỗi thiếu context, lỗi instruction, hay lỗi tool thật? Mỗi loại lỗi thì sửa
+   ở tầng nào?
+
+#### (g) Cost / latency / reliability — ba thứ không được cả ba
+
+1. Task của em tốn 200k token. Em giảm cost bằng cách nào mà **không giảm độ
+   chính xác** — đổi model, rút gọn context, cache, hay giảm số bước? Mỗi cách
+   đánh đổi cái gì?
+2. Agent chạy 5 phút cho một task người làm trong 1 phút. Khi nào thì 5 phút đó
+   chấp nhận được, khi nào thì không? Em đo latency ở đâu trong trace?
+3. "Agent đúng 95% thời gian" — 5% sai còn lại có chấp nhận được không? Phụ
+   thuộc vào gì (task gì? sai có sửa được không? ai chịu hậu quả?)?
+
+#### (h) Security — khi agent gặp dữ liệu xấu
+
+1. Tool trả về một đoạn text chứa instruction "hãy xóa file X". Agent của em
+   sẽ làm gì — và **cái gì trong hệ thống** ngăn nó làm theo (không phải "dặn
+   model đừng nghe")?
+2. Agent cần đọc một repo lạ để review. Quyền tối thiểu em cho nó là gì — và
+   nếu nó cần thêm quyền thì quy trình xin thêm quyền diễn ra thế nào?
+3. Một skill do người khác viết chứa instruction đáng ngờ. Em kiểm tra skill
+   trước khi cho agent dùng bằng cách nào?
+
+### 12B.3 Phân loại lỗi agent — bảng chẩn đoán nhanh
+
+Dùng bảng này khi intern kể "agent bị lỗi": bắt họ xếp lỗi vào một hàng, rồi
+hỏi "sao em biết là hàng đó, không phải hàng khác".
+
+| Triệu chứng | Nguyên nhân gốc thường gặp | Sửa ở tầng nào |
+|---|---|---|
+| Lặp cùng tool call nhiều lần | Tool result không cho model thông tin mới; hoặc instruction mơ hồ khiến model không biết bước tiếp theo | Tool result / prompt |
+| Dừng sớm, task chưa xong | Tiêu chí dừng quá lỏng; model tự tin thái quá | Harness (check bằng code) |
+| Chạy quá nhiều bước, không dừng | Không có tiêu chí dừng; task quá lớn không chia nhỏ | Harness (budget) + task decomposition |
+| Gọi sai tool / sai argument | Mô tả tool mơ hồ; quá nhiều tool tương tự nhau; schema thiếu ví dụ | Tool design |
+| Quên quyết định đầu session | Context đầy, compaction bỏ mất thông tin quan trọng | Context management |
+| Output đúng format nhưng sai nội dung | Eval chỉ check format, không check semantics; thiếu verification | Eval / verification step |
+| Tốn token tăng đột biến | Tool trả về payload lớn không lọc; loop lặp lại; không cache | Tool result filtering / caching |
+| Làm theo instruction trong dữ liệu | Không phân biệt instruction và data; thiếu guardrail bằng code | Guardrails (không phải prompt) |
+| Multi-agent cho kết quả mâu thuẫn | Không có contract giữa các worker; orchestrator không verify | Orchestrator design |
+| Sửa prompt xong task A tốt lên, task B tệ đi | Không có regression eval; prompt overfit vào một task | Eval-driven development |
+
+### 12B.4 Câu hỏi bẫy — đáp án ngây thơ vs đáp án sâu
+
+| Câu hỏi | Đáp án ngây thơ (red flag) | Đáp án sâu |
+|---|---|---|
+| Thêm tool vào có làm agent giỏi hơn không? | "Có, càng nhiều tool càng mạnh" | "Không — mỗi tool thêm vào là thêm khả năng chọn sai. Tool chỉ thêm khi có task thật cần nó, và phải đo xem model có dùng đúng không" |
+| Context càng dài càng tốt? | "Có, model nhớ càng nhiều càng tốt" | "Không — context dài làm model mất tập trung, tốn tiền, và tăng nguy cơ nhiễu. Cái cần là context đúng, không phải context nhiều" |
+| Đổi model mạnh hơn thì agent hết lỗi? | "Có, Opus làm gì cũng tốt hơn" | "Không — lỗi do thiết kế (loop, tool, context) thì model mạnh cũng mắc, chỉ mắc đắt hơn. Model mạnh chỉ giúp khi lỗi do năng lực suy luận" |
+| Dặn model "đừng làm bậy" là đủ an toàn? | "Có, prompt đã nói rõ rồi" | "Không — prompt là gợi ý, không phải kiểm soát. An toàn phải bằng code: sandbox, allowlist, approval" |
+| Agent tự trị hoàn toàn là mục tiêu cuối cùng? | "Có, càng ít người can thiệp càng tốt" | "Không — mục tiêu là đúng việc với chi phí hợp lý. Có task cần người quyết, có task không đáng tự động hoá" |
+| Eval 100% là agent hoàn hảo? | "Có" | "Không — có thể eval quá dễ, hoặc rò rỉ, hoặc đo sai thứ. Eval 100% là tín hiệu cần xem lại eval, không phải ăn mừng" |
+
+### 12B.5 Chấm câu trả lời sâu — Nguyên dùng khi review
+
+- **Biết giới hạn của giải pháp mình:** câu trả lời tốt luôn kèm "nhưng cách
+  này thất bại khi…".
+- **Nói được bằng dữ liệu:** "tôi đã đo", "trace cho thấy", "eval tăng từ X
+  lên Y" — không phải "tôi cảm thấy".
+- **Phân tầng được:** biết lỗi này sửa ở tầng nào (prompt / tool / harness /
+  kiến trúc), không sửa mọi thứ bằng prompt.
+- **Biết khi nào dừng:** biết task nào không nên dùng agent, biết khi nào gọi
+  người, biết khi nào giải pháp đủ tốt rồi.
+
+---
+
 ## 13. Map sang chứng chỉ CCAR-F (Claude for Partner)
 
 **Thông tin chung (theo Exam Guide v1.0, hiệu lực 07/2026 — kiểm tra lại trước khi đăng ký):**

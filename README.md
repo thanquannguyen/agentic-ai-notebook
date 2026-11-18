@@ -23,7 +23,8 @@ dùng cho hai việc:
     ├── 01-minimal-agent-loop.md # Xây vòng lặp agent tối thiểu bằng Python
     ├── 02-write-a-skill.md      # Viết một SKILL.md đúng chuẩn
     ├── 03-design-an-eval.md     # Thiết kế eval cho một agent nhỏ
-    └── 04-rag-retrieval-eval.md # RAG mini + đo recall@k và faithfulness
+    ├── 04-rag-retrieval-eval.md # RAG mini + đo recall@k và faithfulness
+    └── 05-debug-a-broken-agent.md # Chẩn đoán một agent hỏng từ trace thật (kèm đáp án cho người review)
 ```
 
 ## Lộ trình thi khuyên dùng
@@ -41,7 +42,8 @@ Tổng phí cả 4: $524. Mỗi chứng chỉ hiệu lực 12 tháng, gia hạn 
 ## Cách dùng
 
 - **Tự học:** đọc notebook theo thứ tự, làm bài `practice/` sau mỗi cụm chương
-  tương ứng (01 sau chương 1, 02 sau chương 5, 03 sau chương 10, 04 sau chương 6B).
+  tương ứng (01 sau chương 1, 02 sau chương 5, 03 sau chương 10, 04 sau chương 6B,
+  05 sau chương 12B).
 - **Review intern:** dùng rubric và bộ câu hỏi ở chương 12 của notebook.
   Hỏi theo tầng — đừng hỏi câu tầng 3 khi người ta chưa qua tầng 1.
 - **Ôn thi:** đọc file `exams/<mã-thi>.md` tương ứng để biết domain weights
