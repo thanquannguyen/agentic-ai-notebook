@@ -46,6 +46,10 @@ augmented LLM) và D5 (context strategies). Xem chương 6B của notebook.
   trong bảng trên. Làm 4 bài `practice/` để biến lý thuyết thành kỹ năng.
 - **Đọc gốc:** *Building Effective Agents* và *How we built our multi-agent
   research system* (link trong `resources.md`).
+- **Ôn nhanh trước thi:** [cheatsheet 1 trang](CCAR-F-cheatsheet.md) (quy tắc
+  quyết định + thuật ngữ Anh–Việt), [checklist ngày thi](CCAR-F-exam-day.md)
+  (đăng ký, chiến thuật làm bài, thi lại/đổi lịch, out-of-scope), và
+  [mock exam 01](CCAR-F-mock-01.md) (30 câu gốc, 60 phút, chấm theo domain).
 
 ## Tài liệu public cho CCAR-F
 
