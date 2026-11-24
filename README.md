@@ -14,10 +14,10 @@ dùng cho hai việc:
 ├── notebook/
 │   └── Agentic-AI-Notebook.md   # Notebook chính (13 chương + phụ lục)
 ├── exams/
-│   ├── CCAO-F.md                # Associate: Foundations ($99, 60 câu)
-│   ├── CCDV-F.md                # Developer: Foundations ($125, 53 câu)
+│   ├── CCAO-F.md                # Associate: Foundations ($99, 60 câu tới 06/12 · 70 câu từ 07/12)
+│   ├── CCDV-F.md                # Developer: Foundations ($125, 53 câu tới 06/12 · 70 câu từ 07/12)
 │   ├── CCAR-F.md                # Architect: Foundations ($125, 60 câu) ← mục tiêu chính
-│   └── CCAR-P.md                # Architect: Professional ($175, 63 câu)
+│   └── CCAR-P.md                # Architect: Professional ($175, 63 câu tới 06/12 · 70 câu từ 07/12)
 ├── resources.md                 # Link tài liệu chính thức + repo public chọn lọc
 └── practice/
     ├── 01-minimal-agent-loop.md # Xây vòng lặp agent tối thiểu bằng Python
@@ -32,7 +32,7 @@ dùng cho hai việc:
 | Thứ tự | Chứng chỉ | Vì sao ở vị trí này |
 |---|---|---|
 | 1 | **CCAR-F** | Mục tiêu chính: thiết kế hệ thống agentic, review intern, mentor. Notebook này cover toàn bộ 5 domain của nó. |
-| 2 | **CCDV-F** | Bổ sung phần code + tích hợp ứng dụng (Applications & Integration 33.1%). Chồng chéo mạnh với CCAR-F nên học nhanh. ⚠️ Nội dung thi cập nhật từ 07/12/2026 — đọc exam guide mới trước khi ôn. |
+| 2 | **CCDV-F** | Bổ sung phần code + tích hợp ứng dụng (Applications & Integration 33.1% bản cũ / 20% bản mới v1.1). Chồng chéo mạnh với CCAR-F nên học nhanh. ⚠️ CCAO-F, CCDV-F, CCAR-P đổi từ 07/12/2026 — mỗi file exams/ giữ cả 2 bản, ôn theo đúng ngày thi của mình (CCAR-F không đổi). |
 | 3 | **CCAR-P** | Bậc sau CCAR-F, cần thêm kinh nghiệm vận hành production thật (governance, SLA, incident, handoff). |
 | 4 | CCAO-F | Dễ nhất, rẻ nhất — thi cuối để hoàn thành bộ 4, hoặc thi đầu làm warm-up nếu muốn. |
 
