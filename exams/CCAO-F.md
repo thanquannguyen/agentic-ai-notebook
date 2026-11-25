@@ -84,6 +84,7 @@ luyện đề bản mới.
 | [claude.termidy.com/ccao-f](https://claude.termidy.com/ccao-f/) | Community site: guide + ngân hàng 360 câu hỏi viết mới (không phải đề thật), chia theo domain |
 | [rubricedu.com — CCAO-F guide](https://www.rubricedu.com/certifications/ccao-f) | **Bản cũ:** 30 objectives theo 7 domain, mỗi objective link tới bài học |
 | [Practica Cert Prep — CCAO-F](https://certprep.practica.asia/ccao-f) | **Bản mới v1.1:** miễn phí, song ngữ Anh–Việt, 100 câu hỏi theo 6 domain bản mới + mock 70 câu tính giờ |
+| [LearningVN — Luyện thi CCAO-F (tiếng Việt)](https://learningvn.com/explore/luyen-thi-claude-certified-associate) | Khóa tiếng Việt miễn phí (cần tài khoản miễn phí để làm test/mock): 10 chương, 40 bài, 18h10m; 5 test theo chương (95 câu) + 3 mock full 60 câu/120 phút (180 câu). Lưu ý: mock 60 câu là theo bản cũ (thi tới 06/12/2026); từ 07/12/2026 đề thi là 70 câu (60 tính điểm). Trọng số domain trên trang là cách chia của khóa học, không phải trọng số chính thức trong exam guide |
 
 ## Kế hoạch gợi ý (1–2 tuần)
 

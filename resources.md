@@ -62,6 +62,7 @@
 | [claude.termidy.com/ccao-f](https://claude.termidy.com/ccao-f/) | Community site: guide + ngân hàng 360 câu hỏi viết mới theo domain |
 | [rubricedu.com — CCAO-F guide](https://www.rubricedu.com/certifications/ccao-f) | 30 objectives theo 7 domain, mỗi objective link tới bài học |
 | [Practica — CCAO-F](https://certprep.practica.asia/ccao-f) | 21 nguyên tắc theo 6 domain + 100 câu hỏi + mock tính giờ; lưu ý guide v1.1 từ 07/12/2026: 70 câu (60 câu tính điểm), 6 domain |
+| [LearningVN — Luyện thi CCAO-F (tiếng Việt)](https://learningvn.com/explore/luyen-thi-claude-certified-associate) | Khóa tiếng Việt miễn phí (cần tài khoản miễn phí để làm test/mock): 10 chương, 40 bài, 18h10m, 2.041 học viên; 5 test theo chương (95 câu) + 3 mock full 60 câu/120 phút (180 câu) = 275 câu. Lưu ý: mock 60 câu là theo bản cũ (thi tới 06/12/2026); từ 07/12/2026 đề thi là 70 câu (60 tính điểm). Trọng số domain trên trang là cách chia của khóa học, không phải trọng số chính thức trong exam guide (xem bảng trên) |
 
 ## Repo thực hành (cho intern + hiểu harness)
 
